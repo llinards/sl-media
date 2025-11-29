@@ -9,8 +9,9 @@ on:
       - main
 
 jobs:
-  ci:
+  running-tests:
     runs-on: ubuntu-latest
+    name: Running Tests
 
     steps:
       - name: Checkout
@@ -51,7 +52,7 @@ jobs:
         run: ./vendor/bin/pest
 
   deploy-production:
-    needs: ci
+    needs: running-tests
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     environment: production
