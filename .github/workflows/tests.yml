@@ -3,11 +3,9 @@ name: Test and Deploy
 on:
   push:
     branches:
-      - develop
       - main
   pull_request:
     branches:
-      - develop
       - main
 
 jobs:
@@ -51,3 +49,18 @@ jobs:
 
       - name: Run Tests
         run: ./vendor/bin/pest
+
+  deploy-production:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    name: Deploy to Production Environment
+
+    steps:
+      - name: Deploy to Production
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://forge.laravel.com/api/v1/servers/${{ secrets.FORGE_PRODUCTION_SERVER_ID }}/sites/${{ secrets.FORGE_PRODUCTION_SITE_ID }}/deployment/deploy'
+          method: 'POST'
+          customHeaders: '{"Authorization": "Bearer ${{ secrets.FORGE_API_TOKEN_SL_MEDIA }}", "Accept": "application/json", "Content-Type": "application/json"}'
