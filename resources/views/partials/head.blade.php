@@ -39,7 +39,7 @@
 
 <!-- Preconnect -->
 <link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=alkatra:400,500,600" rel="stylesheet"/>
+<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet"/>
 
 <!-- Additional Security & Performance -->
 <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
