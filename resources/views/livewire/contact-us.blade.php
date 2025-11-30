@@ -33,7 +33,7 @@
         <flux:field class="mt-4">
             <flux:checkbox label="Keep me updated — I want to receive news and updates." wire:model="newsletter"/>
         </flux:field>
-        <div class="flex justify-end">
+        <div class="flex justify-center">
             <flux:button variant="primary" icon="envelope" class="mt-6 bg-black" type="submit">
                 {{ __('Send') }}
             </flux:button>
