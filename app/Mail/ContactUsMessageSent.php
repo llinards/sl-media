@@ -27,7 +27,7 @@ class ContactUsMessageSent extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: $this->data['email'],
+            from: 'linards@slmedia.lv',
             subject: 'Jauns pieteikums no mājaslapas'
         );
     }
