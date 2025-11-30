@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Introduction extends Component
 {
-    public bool $isVisible = false;
+    public bool $isVisible = true;
 
     public function toggleVisibility(): void
     {
