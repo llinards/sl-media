@@ -39,6 +39,7 @@ class ContactUs extends Component
             session()->flash('error', 'Something went wrong. Please try again later.');
             Log::error('Contact form error: '.$e->getMessage());
         }
+        $this->dispatch('scrollToTop');
     }
 
     public function render(): View

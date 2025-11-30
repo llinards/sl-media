@@ -1,4 +1,4 @@
-<div>
+<div id="section-contact-us">
     <x-error-message :message="session('error')"/>
     <x-success-message :message="session('success')"/>
     <form wire:submit="submit">
@@ -40,3 +40,10 @@
         </div>
     </form>
 </div>
+@script
+<script>
+    Livewire.on('scrollToTop', () => {
+        document.getElementById('section-contact-us').scrollIntoView({behavior: 'smooth', block: 'center'});
+    });
+</script>
+@endscript
