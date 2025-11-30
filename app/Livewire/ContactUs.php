@@ -31,9 +31,12 @@ class ContactUs extends Component
         try {
             ContactUsMessage::create($this->except('extraFields'));
             Mail::to('linards@slmedia.lv')->send(new ContactUsMessageSent($this->except('extraFields')));
+            $this->isFormVisible = false;
             $this->reset();
+            session()->flash('success',
+                'Your message has been sent successfully and we will get back to you as soon as possible.');
         } catch (\Exception $e) {
-            $this->addError('form', 'Something went wrong. Please try again later.');
+            session()->flash('error', 'Something went wrong. Please try again later.');
             Log::error('Contact form error: '.$e->getMessage());
         }
     }

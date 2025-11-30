@@ -1,7 +1,10 @@
-@props(['error' => 'form'])
+@props(['message' => null])
 
-@if ($errors->has($error))
-    <div class="mb-4 rounded border border-red-500 bg-red-100 p-4 text-red-500">
-        {{ $errors->first($error) }}
-    </div>
+@if ($message)
+    <flux:callout icon="exclamation-triangle" class="mb-4" variant="danger" inline>
+        <flux:callout.heading>{{__('An error has occuried!')}}</flux:callout.heading>
+        <flux:callout.text>{{ $message }}</flux:callout.text>
+    </flux:callout>
 @endif
+
+
