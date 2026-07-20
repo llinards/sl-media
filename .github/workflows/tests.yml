@@ -20,7 +20,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.4
+          php-version: 8.5
           tools: composer:v2
           coverage: xdebug
 
@@ -51,17 +51,13 @@ jobs:
       - name: Run Tests
         run: ./vendor/bin/pest
 
-  deploy-production:
-    needs: running-tests
+  deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    environment: production
-    name: Deploy to Production Environment
-
+    needs: running-tests
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging')
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     steps:
-      - name: Deploy to Production
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://forge.laravel.com/api/v1/servers/${{ secrets.FORGE_PRODUCTION_SERVER_ID }}/sites/${{ secrets.FORGE_PRODUCTION_SITE_ID }}/deployment/deploy'
-          method: 'POST'
-          customHeaders: '{"Authorization": "Bearer ${{ secrets.FORGE_API_TOKEN_SL_MEDIA }}", "Accept": "application/json", "Content-Type": "application/json"}'
+      - name: Trigger Forge deployment
+        env:
+          FORGE_TRIGGER_URL: ${{ github.ref_name == 'main' && secrets.FORGE_TRIGGER_URL_PRODUCTION || secrets.FORGE_TRIGGER_URL_STAGING }}
+        run: curl --fail --silent --show-error --request POST "$FORGE_TRIGGER_URL"
